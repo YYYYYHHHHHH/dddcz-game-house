@@ -1,23 +1,17 @@
-import { Layout } from 'antd';
-
-import HeaderMenu from './components/HeaderMenu'
-import SiderMenu from './components/SiderMenu'
-import ContentMain from './components/ContentMain'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Login from './pages/Login'
+import Main from './components/Main'
 
 import './App.css';
 import 'antd/dist/antd.css';
 
 function App() {
   return (
-    // <Layout>
-    //   <HeaderMenu></HeaderMenu>
-    //   <Layout>
-    //     <SiderMenu></SiderMenu>
-    //     <ContentMain></ContentMain>
-    //   </Layout>
-    // </Layout>
-    <Login></Login>
+    <Switch>
+      <Route path="/login" component={Login}></Route>
+      <Route path="/main" component={Main}></Route>
+      <Redirect to="/login"></Redirect>
+    </Switch>
   );
 }
 

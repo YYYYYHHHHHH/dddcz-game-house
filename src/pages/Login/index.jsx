@@ -4,18 +4,22 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { post } from '../../tools/myFetch'
 import './index.css'
 
-const login = (formData) => {
-    post('/login', formData).then(data => {
-        if(data.success) {
-            message.success(data.msg)
-        } else {
-            message.warning(data.msg)
-        }
-        console.log(data)
-    })
+const login = (props) => {
+    return (formData) => {
+        post('/login', formData).then(data => {
+            if(data.success) {
+                message.success(data.msg)
+                let { history } = props
+                history.replace('/main')
+            } else {
+                message.warning(data.msg)
+            }
+            console.log(data)
+        })
+    }
 }
 
-export default function Login() {
+export default function Login(props) {
     return (
         <div className="login-body">
             <Form
@@ -24,7 +28,7 @@ export default function Login() {
                 initialValues={{
                     remember: true,
                 }}
-                onFinish={login}
+                onFinish={login(props)}
             >
                 <Form.Item
                     className="item"

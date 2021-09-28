@@ -11,8 +11,8 @@ export default function HeaderMenu() {
         <Header className="header">
             <div className="logo" />
             <Menu theme="dark" mode="horizontal">
-                <Menu.Item key="1"><Link to="/tools">工具</Link></Menu.Item>
-                <Menu.Item key="2"><Link to="/about">关于</Link></Menu.Item>
+                <Menu.Item key="1"><Link to="/main/tools">工具</Link></Menu.Item>
+                <Menu.Item key="2"><Link to="/main/about">关于</Link></Menu.Item>
             </Menu>
         </Header>
     )

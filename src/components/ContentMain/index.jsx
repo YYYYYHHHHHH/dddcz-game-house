@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Breadcrumb } from 'antd';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import DevManage from '../../pages/DevManage'
 import Home from '../../pages/Home'
@@ -29,13 +29,14 @@ export default function ContentMain() {
                 }}
             >
                 <Switch>
-                    <Route exact path="/home" component={Home}></Route>
-                    <Route exact path="/manage/version" component={VersionManage}></Route>
-                    <Route exact path="/manage/member" component={MemberManager}></Route>
-                    <Route exact path="/manage/userfeedback" component={UserFeedback}></Route>
-                    <Route exact path="/develop/devmanage" component={DevManage}></Route>
-                    <Route exact path="/about" component={About}></Route>
-                    <Route exact path="/tools" component={Tools}></Route>
+                    <Route path="/main/home" component={Home}></Route>
+                    <Route path="/main/version-manage" component={VersionManage}></Route>
+                    <Route path="/main/member-manage" component={MemberManager}></Route>
+                    <Route path="/main/userfeedback-manage" component={UserFeedback}></Route>
+                    <Route path="/main/devmanage-develop" component={DevManage}></Route>
+                    <Route path="/main/about" component={About}></Route>
+                    <Route path="/main/tools" component={Tools}></Route>
+                    <Redirect to="/main/home"></Redirect>
                 </Switch>
             </Content>
         </Layout>
