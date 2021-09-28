@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { post } from '../../tools/myFetch'
+import { login } from '../../tools/api'
 import './index.css'
 
-const login = (props) => {
+const doLogin = (props) => {
     return (formData) => {
-        post('/login', formData).then(data => {
+        login(formData).then(data => {
             if(data.success) {
-                message.success(data.msg)
                 let { history } = props
                 history.replace('/main')
-            } else {
-                message.warning(data.msg)
             }
             console.log(data)
         })
@@ -28,7 +25,7 @@ export default function Login(props) {
                 initialValues={{
                     remember: true,
                 }}
-                onFinish={login(props)}
+                onFinish={doLogin(props)}
             >
                 <Form.Item
                     className="item"

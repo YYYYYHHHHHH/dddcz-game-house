@@ -1,3 +1,4 @@
+import { message } from 'antd'
 const baseUrl = 'https://mock.yonyoucloud.com/mock/19838/dddcz-game-house'
 
 function http(url, params, headers, method) {
@@ -13,6 +14,13 @@ function http(url, params, headers, method) {
             }
         }).catch(function (error) {
             console.log('There has been a problem with your fetch operation: ', error.message);
+        }).then(data => {
+            if (data.success) {
+                message.success(data.msg)
+            } else {
+                message.warning(data.msg)
+            }
+            return data
         });
 
     return result
