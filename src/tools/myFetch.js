@@ -26,7 +26,7 @@ function http(url, params, headers, method) {
     return result
 }
 
-export function get(url, params, headers) {
+export function get({url, params, headers}) {
     if (params) {
         let paramsArray = []
         paramsArray = Object.keys(params).map(key => {
@@ -41,7 +41,7 @@ export function get(url, params, headers) {
     return http(url, {}, headers, 'GET')
 }
 
-export function post(url, params, headers) {
+export function post({url, params, headers}) {
     let fHeaders = new Headers()
 
     fHeaders.append('Content-Type', 'application/json')
