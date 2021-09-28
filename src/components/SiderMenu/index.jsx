@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-export default function index() {
+export default function SiderMenu() {
     return (
         <Sider width={200} className="site-layout-background">
             <Menu

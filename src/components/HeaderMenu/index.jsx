@@ -6,7 +6,7 @@ import  './index.css'
 
 const { Header } = Layout;
 
-export default function index() {
+export default function HeaderMenu() {
     return (
         <Header className="header">
             <div className="logo" />

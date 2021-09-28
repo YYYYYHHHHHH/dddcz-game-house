@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import DevManage from '../../pages/DevManage'
 import Home from '../../pages/Home'
-import MemberManager from '../../pages/MemberManager'
+import MemberManager from '../../pages/MemberManage'
 import UserFeedback from '../../pages/UserFeedback'
 import VersionManage from '../../pages/VersionManage'
 import About from '../../pages/About'
@@ -12,7 +12,7 @@ import Tools from '../../pages/Tools'
 
 const { Content } = Layout;
 
-export default function index() {
+export default function ContentMain() {
     return (
         <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
