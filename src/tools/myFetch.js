@@ -16,9 +16,13 @@ function http(url, params, headers, method) {
             console.log('There has been a problem with your fetch operation: ', error.message);
         }).then(data => {
             if (data.success) {
-                message.success(data.msg)
+                data.msg && message.success(data.msg)
             } else {
-                message.warning(data.msg)
+                data.msg && message.warning(data.msg)
+                if(data.state === 701) {
+                    window.location.hash = '#/login'
+                    return null
+                }
             }
             return data
         });
