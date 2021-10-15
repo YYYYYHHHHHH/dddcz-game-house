@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { login } from '../../tools/api'
+import localStorage from 'localStorage'
 import './index.css'
 
 const doLogin = (props) => {
@@ -11,7 +12,7 @@ const doLogin = (props) => {
                 let { history } = props
                 history.replace('/main')
             }
-            console.log(data)
+            localStorage.setItem('user', JSON.stringify(data.data))
         })
     }
 }
@@ -29,7 +30,7 @@ export default function Login(props) {
             >
                 <Form.Item
                     className="item"
-                    name="username"
+                    name="name"
                     rules={[
                         {
                             required: true,

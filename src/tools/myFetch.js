@@ -1,5 +1,6 @@
 import { message } from 'antd'
-const baseUrl = 'https://mock.yonyoucloud.com/mock/19838/dddcz-game-house'
+// const baseUrl = 'https://mock.yonyoucloud.com/mock/19838/dddcz-game-house'
+const baseUrl = 'http://127.0.0.1:8080/api'
 
 function http(url, params, headers, method) {
     let fParams = params || {}
