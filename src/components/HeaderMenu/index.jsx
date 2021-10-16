@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom'
 import { Layout, Menu, Avatar} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import localStorage from 'localStorage'
-
 import  './index.css'
 
 const { Header } = Layout;
-const showInfo = () => {
-    console.log(JSON.parse(localStorage.getItem('user')))
-}
 
-export default function HeaderMenu() {
+export default function HeaderMenu(comp) {
+    const showInfo = () => {
+        console.log(JSON.parse(localStorage.getItem('user')))
+        console.log(comp)
+        comp.history.push('/user-info')
+    }
     return (
         <Header className="header">
             <Avatar onClick={showInfo} icon={<UserOutlined/>} size="large">

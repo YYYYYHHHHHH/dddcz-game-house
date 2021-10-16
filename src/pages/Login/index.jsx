@@ -12,6 +12,7 @@ const doLogin = (props) => {
                 let { history } = props
                 history.replace('/main')
             }
+            console.log('login: ', data.data)
             localStorage.setItem('user', JSON.stringify(data.data))
         })
     }

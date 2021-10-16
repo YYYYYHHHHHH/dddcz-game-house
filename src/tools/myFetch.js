@@ -55,3 +55,13 @@ export function post({url, params, headers}) {
 
     return http(url, params, fHeaders, 'POST')
 }
+
+export function put({url, params, headers}) {
+    let fHeaders = new Headers()
+
+    fHeaders.append('Content-Type', 'application/json')
+    fHeaders.append('Accept', 'application/json')
+    fHeaders = headers || fHeaders
+
+    return http(url, params, fHeaders, 'PUT')
+}
