@@ -8,6 +8,7 @@ import  './index.css'
 const { Header } = Layout;
 
 export default function HeaderMenu(comp) {
+    const user = JSON.parse(localStorage.getItem('user')) 
     const showInfo = () => {
         console.log(JSON.parse(localStorage.getItem('user')))
         console.log(comp)
@@ -15,7 +16,7 @@ export default function HeaderMenu(comp) {
     }
     return (
         <Header className="header">
-            <Avatar onClick={showInfo} icon={<UserOutlined/>} size="large">
+            <Avatar src={user.avatar} onClick={showInfo} icon={<UserOutlined/>} size="large">
 
             </Avatar>
             {/* <div className="logo"/> */}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { PageHeader, Form, Input, Button, Avatar, Upload } from 'antd';
+import React, { useState, useEffect, useRef } from 'react'
+import { PageHeader, Form, Input, Button, Avatar, Upload, Modal, message } from 'antd';
 import localStorage from 'localStorage'
 import { editUser } from '../../tools/api'
 import './index.css'
@@ -7,7 +7,69 @@ import './index.css'
 const { TextArea, Password } = Input
 
 export default function UserInfo(comp) {
+    const userInput = useRef()
+    const userInputAgain = useRef()
+    const pwdInput = useRef()
+    const pwdInputAgain = useRef()
+
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [isUserModalVisible, setUserModalVisible] = useState(false);
+    const [isPwdModalVisible, setPwdModalVisible] = useState(false);
+
+
+    const showModal = () => {
+        setUserModalVisible(true);
+    };
+
+    const showPwdModal = () => {
+        setPwdModalVisible(true)
+    }
+
+    const handlePwdCancel = () => {
+        setPwdModalVisible(false);
+        pwdInput.current.state.value = ''
+        pwdInputAgain.current.state.value = ''
+    }
+
+    const handlePwdOk = () => {
+        let password = pwdInput.current.state.value,
+            passwordAgain = pwdInputAgain.current.state.value
+
+        if (password === passwordAgain && password) {
+            let data = { ...user, password: password }
+            editUser(data).then(() => {
+                setUser(data)
+                localStorage.setItem('user', JSON.stringify(data))
+                setPwdModalVisible(false);
+            })
+
+        } else {
+            message.warning('两次输入的值不一致或输入值为空')
+        }
+    }
+
+    const handleOk = () => {
+        let userName = userInput.current.state.value,
+            userNameAgain = userInputAgain.current.state.value
+
+        if (userName === userNameAgain && userName) {
+            let data = { ...user, name: userName }
+            editUser(data).then(() => {
+                setUser(data)
+                localStorage.setItem('user', JSON.stringify(data))
+                setUserModalVisible(false);
+            })
+
+        } else {
+            message.warning('两次输入的值不一致或输入值为空')
+        }
+    };
+
+    const handleCancel = () => {
+        setUserModalVisible(false);
+        userInput.current.state.value = ''
+        userInputAgain.current.state.value = ''
+    };
 
     const onFinish = (data) => {
         editUser(data).then(() => {
@@ -25,9 +87,17 @@ export default function UserInfo(comp) {
         }
     }
 
-    const pageHeaderClick = ()=>{
+    const pageHeaderClick = () => {
         console.log(comp)
         comp.history.replace('/main')
+    }
+
+    const changeUser = () => {
+        showModal()
+    }
+
+    const changePwd = () => {
+        showPwdModal()
     }
 
     return (
@@ -104,14 +174,19 @@ export default function UserInfo(comp) {
                             >
                                 <Input
                                     disabled
-                                    addonAfter={<Button>修改</Button>}
+                                    addonAfter={<Button onClick={changeUser}>修改</Button>}
                                 />
+
                             </Form.Item>
                             <Form.Item
                                 label="密码"
                                 name="password"
                             >
-                                <Password visibilityToggle={false} disabled addonAfter={<Button>修改</Button>} />
+                                <Password
+                                    visibilityToggle={false}
+                                    addonAfter={<Button onClick={changePwd}>修改</Button>}
+                                    disabled
+                                />
                             </Form.Item>
                             <Form.Item
                                 label="签名"
@@ -153,11 +228,29 @@ export default function UserInfo(comp) {
                             支持 jpg、png、jpeg 格式大小 5M 以内的图片
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
+            <Modal title="修改用户" visible={isUserModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <div style={{ marginBottom: '8px' }}>
+                    <div>用户名</div>
+                    <Input ref={userInput}></Input>
+                </div>
+                <div>
+                    <div>再次确认</div>
+                    <Input ref={userInputAgain}></Input>
+                </div>
+            </Modal>
+
+            <Modal title="修改密码" visible={isPwdModalVisible} onOk={handlePwdOk} onCancel={handlePwdCancel}>
+                <div style={{ marginBottom: '8px' }}>
+                    <div>密码</div>
+                    <Input ref={pwdInput}></Input>
+                </div>
+                <div>
+                    <div>再次确认</div>
+                    <Input ref={pwdInputAgain}></Input>
+                </div>
+            </Modal>
         </div>
     )
 }
