@@ -1,6 +1,6 @@
 import { message } from 'antd'
 // const baseUrl = 'https://mock.yonyoucloud.com/mock/19838/dddcz-game-house'
-const baseUrl = 'http://127.0.0.1:8080/api'
+export const baseUrl = 'http://106.15.32.115:8095/api'
 
 function http(url, params, headers, method) {
     let fParams = params || {}
@@ -14,13 +14,15 @@ function http(url, params, headers, method) {
                 throw new Error('Network response was not ok.')
             }
         }).catch(function (error) {
-            console.log('There has been a problem with your fetch operation: ', error.message);
+            message.error('There has been a problem with your fetch operation: ', error.message)
+            return error
         }).then(data => {
+            console.log(data)
             if (data.success) {
                 data.msg && message.success(data.msg)
             } else {
                 data.msg && message.warning(data.msg)
-                if(data.state === 701) {
+                if (data.state === 701) {
                     window.location.hash = '#/login'
                     return null
                 }
@@ -31,7 +33,7 @@ function http(url, params, headers, method) {
     return result
 }
 
-export function get({url, params, headers}) {
+export function get({ url, params, headers }) {
     if (params) {
         let paramsArray = []
         paramsArray = Object.keys(params).map(key => {
@@ -46,7 +48,7 @@ export function get({url, params, headers}) {
     return http(url, {}, headers, 'GET')
 }
 
-export function post({url, params, headers}) {
+export function post({ url, params, headers }) {
     let fHeaders = new Headers()
 
     fHeaders.append('Content-Type', 'application/json')
@@ -56,7 +58,7 @@ export function post({url, params, headers}) {
     return http(url, params, fHeaders, 'POST')
 }
 
-export function put({url, params, headers}) {
+export function put({ url, params, headers }) {
     let fHeaders = new Headers()
 
     fHeaders.append('Content-Type', 'application/json')

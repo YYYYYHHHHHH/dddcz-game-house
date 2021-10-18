@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { PageHeader, Form, Input, Button, Avatar, Upload, Modal, message } from 'antd';
 import localStorage from 'localStorage'
-import { editUser } from '../../tools/api'
+import { editUser, upload } from '../../tools/api'
 import './index.css'
 
 const { TextArea, Password } = Input
@@ -212,7 +212,7 @@ export default function UserInfo(comp) {
                                 name="avatar"
                                 listType="picture"
                                 showUploadList={false}
-                                action="http://127.0.0.1:8080/api/user/upload"
+                                action={upload}
                                 data={{ id: user.id }}
                                 onChange={handleChange}
                             >

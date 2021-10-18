@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Layout, Menu } from 'antd';
 import { InboxOutlined, CodeOutlined, HomeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
@@ -7,12 +7,18 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export default function SiderMenu() {
+    const [innerHeight, setInnerHeight] = useState(0)
+
+    useEffect(() => {
+        setInnerHeight(window.innerHeight - 64) 
+    })
+    
     return (
         <Sider width={200} className="site-layout-background">
             <Menu
                 mode="inline"
                 defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
+                style={{ height: `${innerHeight}px`, borderRight: 0 }}
             >
                 <Menu.Item key="1" icon={<HomeOutlined />}>
                     <Link to="/main/home">首页</Link>

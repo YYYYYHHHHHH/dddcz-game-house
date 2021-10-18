@@ -10,10 +10,14 @@ const doLogin = (props) => {
         login(formData).then(data => {
             if(data.success) {
                 let { history } = props
-                history.replace('/main')
+                new Promise((reslove, reject) => {
+                    localStorage.setItem('user', JSON.stringify(data.data))    
+                    reslove()
+                }).then(() => {
+                    history.replace('/main')
+                    console.log('login: ', data.data)
+                })
             }
-            console.log('login: ', data.data)
-            localStorage.setItem('user', JSON.stringify(data.data))
         })
     }
 }
