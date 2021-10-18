@@ -11,6 +11,7 @@ export default function UserInfo(comp) {
     const userInputAgain = useRef()
     const pwdInput = useRef()
     const pwdInputAgain = useRef()
+    const form = useRef()
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const [isUserModalVisible, setUserModalVisible] = useState(false);
@@ -40,6 +41,7 @@ export default function UserInfo(comp) {
             editUser(data).then(() => {
                 setUser(data)
                 localStorage.setItem('user', JSON.stringify(data))
+                form.current.setFieldsValue(data)
                 setPwdModalVisible(false);
             })
 
@@ -58,6 +60,7 @@ export default function UserInfo(comp) {
                 setUser(data)
                 localStorage.setItem('user', JSON.stringify(data))
                 setUserModalVisible(false);
+                form.current.setFieldsValue(data)
             })
 
         } else {
@@ -84,6 +87,7 @@ export default function UserInfo(comp) {
             let data = { ...user, avatar: info.file.response.data }
             setUser(data)
             localStorage.setItem('user', JSON.stringify(data))
+            form.current.setFieldsValue(data)
         }
     }
 
@@ -117,6 +121,7 @@ export default function UserInfo(comp) {
                             个人资料
                         </div>
                         <Form
+                            ref={form}
                             labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20, offset: 1 }}
                             size="large"
