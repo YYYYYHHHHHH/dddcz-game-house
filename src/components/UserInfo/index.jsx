@@ -79,8 +79,8 @@ export default function UserInfo(comp) {
   }
 
   const handleChange = info => {
-    if (info.file.status === 'done') {
-      const data = { ...user, avatar: info.file.response.data }
+    if (info?.file?.status === 'done') {
+      const data = { ...user, avatar: info?.file?.response?.data }
       setUser(data)
       localStorage.setItem('user', JSON.stringify(data))
       form.current.setFieldsValue(data)
@@ -190,7 +190,7 @@ export default function UserInfo(comp) {
         </div>
       </div>
       <Modal title="修改用户" visible={isUserModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <div style={{ marginBottom: '8px' }}>
+        <div className="modal-con">
           <div>用户名</div>
           <Input ref={userInput} />
         </div>
@@ -201,7 +201,7 @@ export default function UserInfo(comp) {
       </Modal>
 
       <Modal title="修改密码" visible={isPwdModalVisible} onOk={handlePwdOk} onCancel={handlePwdCancel}>
-        <div style={{ marginBottom: '8px' }}>
+        <div className="modal-con">
           <div>密码</div>
           <Input ref={pwdInput} />
         </div>

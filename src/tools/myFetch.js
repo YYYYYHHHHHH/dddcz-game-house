@@ -24,10 +24,10 @@ function http(url, params, headers, method) {
     })
     .then(data => {
       if (data.success) {
-        if (data.msg) message.success(data.msg)
+        if (data?.msg) message.success(data.msg)
       } else {
-        if (data.msg) message.warning(data.msg)
-        if (data.state === 701) {
+        if (data?.msg) message.warning(data.msg)
+        if (data?.state === 701) {
           window.location.hash = '#/login'
           return null
         }

@@ -9,25 +9,19 @@ import UserFeedback from '../../pages/UserFeedback'
 import VersionManage from '../../pages/VersionManage'
 import About from '../../pages/About'
 import Tools from '../../pages/Tools'
+import './index.css'
 
 const { Content } = Layout
 
 export default function ContentMain() {
   return (
-    <Layout style={{ padding: '0 24px 24px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
+    <Layout className="layout-con">
+      <Breadcrumb className="breadcrumb-con">
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>List</Breadcrumb.Item>
         <Breadcrumb.Item>App</Breadcrumb.Item>
       </Breadcrumb>
-      <Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-      >
+      <Content className="site-layout-background con">
         <Switch>
           <Route path="/main/home" component={Home} />
           <Route path="/main/version-manage" component={VersionManage} />
