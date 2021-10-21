@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Layout } from 'antd';
+import { Layout } from 'antd'
 import { withRouter } from 'react-router-dom'
 
 import HeaderMenu from '../HeaderMenu'
@@ -8,13 +8,13 @@ import ContentMain from '../ContentMain'
 
 const HeaderMenuRouter = withRouter(HeaderMenu)
 export default function Main() {
-    return (
-        <Layout>
-            <HeaderMenuRouter></HeaderMenuRouter>
-            <Layout>
-                <SiderMenu></SiderMenu>
-                <ContentMain></ContentMain>
-            </Layout>
-        </Layout>
-    )
+  return (
+    <Layout>
+      <HeaderMenuRouter />
+      <Layout>
+        <SiderMenu />
+        <ContentMain />
+      </Layout>
+    </Layout>
+  )
 }
