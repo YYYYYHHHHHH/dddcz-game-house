@@ -12,6 +12,18 @@ export function editUser(data) {
 export function upload() {
   return `${baseUrl}/user/upload`
 }
+// 获取聊天用户列表
+export function getMemberList() {
+  return get({ url: '/group-chat/users' })
+}
+// 获取聊天记录
+export function getChatHis(data) {
+  return get({ url: '/group-chat/his', params: data })
+}
+// 发送聊天信息
+export function sendChat(data) {
+  return post({ url: '/group-chat/send', params: data })
+}
 // // 加载首页数据
 // export function dashboard(token) {
 //     let headers = new Headers()

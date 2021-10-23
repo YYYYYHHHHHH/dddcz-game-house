@@ -9,6 +9,7 @@ import UserFeedback from '../../pages/UserFeedback'
 import VersionManage from '../../pages/VersionManage'
 import About from '../../pages/About'
 import Tools from '../../pages/Tools'
+import GroupChat from '../../pages/GroupChat'
 import './index.css'
 
 const { Content } = Layout
@@ -30,6 +31,7 @@ export default function ContentMain() {
           <Route path="/main/devmanage-develop" component={DevManage} />
           <Route path="/main/about" component={About} />
           <Route path="/main/tools" component={Tools} />
+          <Route path="/main/group-chat" component={GroupChat} />
           <Redirect to="/main/home" />
         </Switch>
       </Content>

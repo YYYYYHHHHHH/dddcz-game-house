@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import localStorage from 'localStorage'
 import { login } from '../../tools/api'
+import getSocket from '../../server/webSocket'
 import './index.css'
 
 const doLogin = props => {
@@ -10,10 +11,11 @@ const doLogin = props => {
     login(formData).then(data => {
       if (data.success) {
         const { history } = props
-        new Promise((reslove, reject) => {
+        new Promise((resolve, reject) => {
           localStorage.setItem('user', JSON.stringify(data.data))
-          reslove()
+          resolve()
         }).then(() => {
+          getSocket()
           history.replace('/main')
         })
       }
