@@ -12,6 +12,7 @@ export default function getSocket() {
   } else {
     // 获取本地存储的user信息
     const user = JSON.parse(localStorage.getItem('user'))
+    if (typeof user?.id === 'undefined') return
     webSocketUrl += user?.id
     if (socket != null) {
       return socket

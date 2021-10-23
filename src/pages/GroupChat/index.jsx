@@ -9,20 +9,21 @@ import getSocket from '../../server/webSocket'
 import { getMemberList, getChatHis, sendChat } from '../../tools/api'
 
 const { TextArea } = Input
-const socket = getSocket()
 const user = JSON.parse(localStorage.getItem('user'))
 
 export default function GroupChat() {
   const [memberList, setMemberList] = useState([])
   const [chatList, setChatList] = useState([])
   const [mes, setMes] = useState('')
-
+  let socket
   let chatListC = []
+  let memberListC = []
 
   const mainCont = useRef(null)
 
   // 初级加载为socket绑定接收事件
   useEffect(() => {
+    socket = getSocket()
     socket.onmessage = params => {
       const { data } = params
       const socketData = JSON.parse(data)
@@ -50,6 +51,7 @@ export default function GroupChat() {
   // 初次加载获取用户列表
   useEffect(() => {
     getMemberList().then(data => {
+      memberListC = data?.data
       setMemberList(data?.data)
     })
   }, [])
@@ -78,7 +80,7 @@ export default function GroupChat() {
       icon: <SmileOutlined style={{ color: '#108ee9' }} />,
     })
     setMemberList(
-      memberList.map(member => {
+      memberListC.map(member => {
         if (member?.id === id) {
           return { ...member, onLine: true }
         }
@@ -96,7 +98,7 @@ export default function GroupChat() {
       icon: <FrownOutlined style={{ color: 'rgb(236, 91, 86)' }} />,
     })
     setMemberList(
-      memberList.map(member => {
+      memberListC.map(member => {
         if (member?.id === id) {
           return { ...member, onLine: false }
         }
