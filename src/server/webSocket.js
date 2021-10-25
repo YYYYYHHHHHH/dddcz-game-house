@@ -1,8 +1,8 @@
 import localStorage from 'localStorage'
 import { message } from 'antd'
 
-// let webSocketUrl = 'ws://127.0.0.1:8080/imserver/'
-let webSocketUrl = 'ws://106.15.32.115:8095/imserver/'
+let webSocketUrl = 'ws://127.0.0.1:8080/imserver/'
+// let webSocketUrl = 'ws://106.15.32.115:8095/imserver/'
 
 let socket = null
 

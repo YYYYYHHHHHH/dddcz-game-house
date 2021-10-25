@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect, useRef } from 'react'
 import { Input, notification } from 'antd'
 import { SmileOutlined, FrownOutlined, CodeSandboxCircleFilled } from '@ant-design/icons'
@@ -9,23 +10,23 @@ import getSocket from '../../server/webSocket'
 import { getMemberList, getChatHis, sendChat } from '../../tools/api'
 
 const { TextArea } = Input
-const user = JSON.parse(localStorage.getItem('user'))
 
 export default function GroupChat() {
   const [memberList, setMemberList] = useState([])
   const [chatList, setChatList] = useState([])
   const [mes, setMes] = useState('')
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   let socket
-  let chatListC = []
-  let memberListC = []
 
   const mainCont = useRef(null)
-
   // 初级加载为socket绑定接收事件
   useEffect(() => {
     socket = getSocket()
     socket.onmessage = params => {
+      console.log(params)
+
       const { data } = params
+      if (data === '连接成功') return
       const socketData = JSON.parse(data)
       switch (socketData?.type) {
         // xxx登录
@@ -47,11 +48,21 @@ export default function GroupChat() {
           console.log('错误的type')
       }
     }
+    socket.onopen = params => {
+      // 加载用户列表
+      getMemberList().then(data => {
+        console.log('open时获取用户列表：', data)
+        setMemberList(data?.data)
+      })
+    }
+    return () => {
+      socket.onmessage = null
+    }
   }, [])
-  // 初次加载获取用户列表
+  // 加载用户列表
   useEffect(() => {
     getMemberList().then(data => {
-      memberListC = data?.data
+      console.log('加载时获取用户列表：', data)
       setMemberList(data?.data)
     })
   }, [])
@@ -59,11 +70,10 @@ export default function GroupChat() {
   useEffect(() => {
     getChatHis({ start: 0, num: 60 }).then(data => {
       setChatList(data?.data)
-      chatListC = [...data?.data]
       mainCont.current.scrollTop = mainCont.current.scrollHeight
     })
   }, [])
-  const onEnterPress = params => {
+  function onEnterPress(params) {
     sendChat({ userId: user.id, cont: mes }).then(() => {
       setMes('')
     })
@@ -79,14 +89,14 @@ export default function GroupChat() {
       description: `${nickname}上线啦！！`,
       icon: <SmileOutlined style={{ color: '#108ee9' }} />,
     })
-    setMemberList(
-      memberListC.map(member => {
+    setMemberList(preMemberList => {
+      return preMemberList.map(member => {
         if (member?.id === id) {
           return { ...member, onLine: true }
         }
         return member
-      }),
-    )
+      })
+    })
   }
 
   const socketExit = socketData => {
@@ -97,20 +107,20 @@ export default function GroupChat() {
       description: `${nickname}下线了`,
       icon: <FrownOutlined style={{ color: 'rgb(236, 91, 86)' }} />,
     })
-    setMemberList(
-      memberListC.map(member => {
+    setMemberList(preMemberList => {
+      return preMemberList.map(member => {
         if (member?.id === id) {
           return { ...member, onLine: false }
         }
         return member
-      }),
-    )
+      })
+    })
   }
 
   const socketReceive = socketData => {
-    const newChatList = [...chatListC, socketData.data]
-    setChatList(newChatList)
-    chatListC = newChatList
+    setChatList(preChatList => {
+      return [...preChatList, socketData.data]
+    })
     mainCont.current.scrollTop = mainCont.current.scrollHeight
   }
 
@@ -119,7 +129,7 @@ export default function GroupChat() {
       <div className="left-component">
         <div className="title">丁丁的村庄内部聊天群</div>
         <div className="main-cont" ref={mainCont}>
-          {chatList.map(chat => {
+          {chatList?.map(chat => {
             const { avatar, nickname, chatCont, chatDateTime } = chat
             if (chat?.id === user?.id) {
               return <RightChatCard key={chatDateTime} avatar={avatar} nickName={nickname} cont={chatCont} />
@@ -135,7 +145,7 @@ export default function GroupChat() {
       <div className="right-component">
         <div className="right-component-title">
           成员
-          {memberList.reduce((count, currentValue) => {
+          {memberList?.reduce((count, currentValue) => {
             if (currentValue?.onLine) {
               return count + 1
             }
